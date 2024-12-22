@@ -153,7 +153,6 @@ namespace Banking_Application
         {
 
             accounts.Add(ba);
-            Console.WriteLine("Name IV: " + ba.Name);
 
             using (var connection = getDatabaseConnection())
             {

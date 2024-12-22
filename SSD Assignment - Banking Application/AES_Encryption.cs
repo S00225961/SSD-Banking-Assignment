@@ -19,8 +19,6 @@ namespace SSD_Assignment___Banking_Application
             {
                 aes.Key = Key;
                 aes.GenerateIV();
-                Console.WriteLine("Key: " + Encoding.UTF8.GetString(Key));
-                Console.WriteLine("IV: " + Encoding.UTF8.GetString(aes.IV));
                 iv = aes.IV;
                 ICryptoTransform encryptor = aes.CreateEncryptor(Key, iv);
                 using (MemoryStream memoryStream = new MemoryStream())
@@ -46,8 +44,6 @@ namespace SSD_Assignment___Banking_Application
             {
                 aes.Key = Key;
                 aes.IV = iv;
-                Console.WriteLine("Key: " + Encoding.UTF8.GetString(Key));
-                Console.WriteLine("IV: " + Encoding.UTF8.GetString(aes.IV));
                 ICryptoTransform decryptor = aes.CreateDecryptor(Key, iv);
                 using (MemoryStream memoryStream = new MemoryStream(cipheredtext))
                 {
