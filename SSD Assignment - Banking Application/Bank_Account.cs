@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SSD_Assignment___Banking_Application;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,34 +10,83 @@ namespace Banking_Application
     public abstract class Bank_Account
     {
 
-        public String accountNo;
-        public String name;
-        public String address_line_1;
-        public String address_line_2;
-        public String address_line_3;
-        public String town;
-        public double balance;
+        public string AccountNo { get; set; }
+        public byte[] EncryptedName { get; set; }
+        public byte[] NameIV { get; set; }
+        public byte[] EncryptedAddressLine1 { get; set; }
+        public byte[] EncryptedAddressLine2 { get; set; }
+        public byte[] EncryptedAddressLine3 { get; set; }
 
-        public Bank_Account()
+        public byte[] AddressLine1IV { get; set; }
+        public byte[] AddressLine2IV { get; set; }
+        public byte[] AddressLine3IV { get; set; }
+
+        public byte[] EncryptedTown { get; set; }
+        public byte[] TownIV { get; set; }
+        public double Balance { get; set; }
+
+        protected Bank_Account() { }
+
+        public string Name
         {
-
+            get => AES_Encryption.Decrypt(EncryptedName, NameIV);
+            set
+            {
+                (EncryptedName, NameIV) = AES_Encryption.Encrypt(value);
+            }
         }
-        
-        public Bank_Account(String name, String address_line_1, String address_line_2, String address_line_3, String town, double balance)
+
+        public string AddressLine1
         {
-            this.accountNo = System.Guid.NewGuid().ToString();
-            this.name = name;
-            this.address_line_1 = address_line_1;
-            this.address_line_2 = address_line_2;
-            this.address_line_3 = address_line_3;
-            this.town = town;
-            this.balance = balance;
+            get => AES_Encryption.Decrypt(EncryptedAddressLine1, AddressLine1IV);
+            set
+            {
+                (EncryptedAddressLine1, AddressLine1IV) = AES_Encryption.Encrypt(value);
+            }
+        }
+
+        public string AddressLine2
+        {
+            get => AES_Encryption.Decrypt(EncryptedAddressLine2, AddressLine2IV);
+            set
+            {
+                (EncryptedAddressLine2, AddressLine2IV) = AES_Encryption.Encrypt(value);
+            }
+        }
+
+        public string AddressLine3
+        {
+            get => AES_Encryption.Decrypt(EncryptedAddressLine3, AddressLine3IV);
+            set
+            {
+                (EncryptedAddressLine3, AddressLine3IV) = AES_Encryption.Encrypt(value);
+            }
+        }
+
+        public string Town
+        {
+            get => AES_Encryption.Decrypt(EncryptedTown, TownIV);
+            set
+            {
+                (EncryptedTown, TownIV) = AES_Encryption.Encrypt(value);
+            }
+        }
+
+        public Bank_Account(string name, string addressLine1, string addressLine2, string addressLine3, string town, double balance)
+        {
+            AccountNo = Guid.NewGuid().ToString();
+            Name = name;
+            AddressLine1 = addressLine1;
+            AddressLine2 = addressLine2;
+            AddressLine3 = addressLine3;
+            Town = town;
+            Balance = balance;
         }
 
         public void lodge(double amountIn)
         {
 
-            balance += amountIn;
+            Balance += amountIn;
 
         }
 
@@ -47,15 +97,15 @@ namespace Banking_Application
         public override String ToString()
         {
 
-            return "\nAccount No: " + accountNo + "\n" +
-            "Name: " + name + "\n" +
-            "Address Line 1: " + address_line_1 + "\n" +
-            "Address Line 2: " + address_line_2 + "\n" +
-            "Address Line 3: " + address_line_3 + "\n" +
-            "Town: " + town + "\n" +
-            "Balance: " + balance + "\n";
+            return "\nAccount No: " + AccountNo + "\n" +
+            "Name: " + Name + "\n" +
+            "Address Line 1: " + AddressLine1 + "\n" +
+            "Address Line 2: " + AddressLine2 + "\n" +
+            "Address Line 3: " + AddressLine3 + "\n" +
+            "Town: " + Town + "\n" +
+            "Balance: " + Balance + "\n";
 
-    }
+        }
 
     }
 }

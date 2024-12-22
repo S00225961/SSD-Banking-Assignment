@@ -9,16 +9,13 @@ namespace Banking_Application
     public class Current_Account: Bank_Account
     {
 
-        public double overdraftAmount;
+        public double OverdraftAmount;
 
-        public Current_Account(): base()
-        {
-
-        }
+        public Current_Account(): base() { }
         
-        public Current_Account(String name, String address_line_1, String address_line_2, String address_line_3, String town, double balance, double overdraftAmount) : base(name, address_line_1, address_line_2, address_line_3, town, balance)
+        public Current_Account(String name, String addressLine1, String addressLine2, String addressLine3, String town, double balance, double overdraftAmount) : base(name, addressLine1, addressLine2, addressLine3, town, balance)
         {
-            this.overdraftAmount = overdraftAmount;
+            this.OverdraftAmount = overdraftAmount;
         }
 
         public override bool withdraw(double amountToWithdraw)
@@ -27,7 +24,7 @@ namespace Banking_Application
 
             if (avFunds >= amountToWithdraw)
             {
-                balance -= amountToWithdraw;
+                Balance -= amountToWithdraw;
                 return true;
             }
 
@@ -38,7 +35,7 @@ namespace Banking_Application
 
         public override double getAvailableFunds()
         {
-            return (base.balance + overdraftAmount);
+            return (base.Balance + OverdraftAmount);
         }
 
         public override String ToString()
@@ -46,7 +43,7 @@ namespace Banking_Application
 
             return base.ToString() +
                 "Account Type: Current Account\n" +
-                "Overdraft Amount: " + overdraftAmount + "\n";
+                "Overdraft Amount: " + OverdraftAmount + "\n";
 
         }
 
