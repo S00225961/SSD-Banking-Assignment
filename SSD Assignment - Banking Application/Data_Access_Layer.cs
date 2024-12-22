@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.PortableExecutable;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
@@ -12,7 +13,7 @@ namespace Banking_Application
 {
     public class Data_Access_Layer
     {
-
+        private Auth auth = new Auth();
         private List<Bank_Account> accounts;
         public static String databaseName = "Banking Database.db";
         private static Data_Access_Layer instance = new Data_Access_Layer();
@@ -141,6 +142,9 @@ namespace Banking_Application
 
                         accounts.Add(ba);
 
+                        //Logging
+                        Bank_Log bankLog = new Bank_Log();
+                        bankLog.LogTransaction(auth.username, ba.AccountNo, ba.Name, Bank_Log.TransactionType.Balance_Query);
 
                     }
 
@@ -192,7 +196,7 @@ namespace Banking_Application
             }
             //Logging
             Bank_Log bankLog = new Bank_Log();
-            bankLog.LogTransaction("John", ba.AccountNo, ba.Name, Bank_Log.TransactionType.Account_Creation);
+            bankLog.LogTransaction(auth.username, ba.AccountNo, ba.Name, Bank_Log.TransactionType.Account_Creation);
 
             return ba.AccountNo;
 
@@ -245,6 +249,10 @@ namespace Banking_Application
 
                 }
 
+                //Logging
+                Bank_Log bankLog = new Bank_Log();
+                bankLog.LogTransaction(auth.username, toRemove.AccountNo, toRemove.Name, Bank_Log.TransactionType.Account_Closure);
+
                 return true;
             }
 
@@ -280,6 +288,10 @@ namespace Banking_Application
                     command.ExecuteNonQuery();
 
                 }
+
+                //Logging
+                Bank_Log bankLog = new Bank_Log();
+                bankLog.LogTransaction(auth.username, toLodgeTo.AccountNo, toLodgeTo.Name, Bank_Log.TransactionType.Lodgement);
 
                 return true;
             }
@@ -317,6 +329,10 @@ namespace Banking_Application
                     command.ExecuteNonQuery();
 
                 }
+
+                //Logging
+                Bank_Log bankLog = new Bank_Log();
+                bankLog.LogTransaction(auth.username, toWithdrawFrom.AccountNo, toWithdrawFrom.Name, Bank_Log.TransactionType.Withdrawal);
 
                 return true;
             }

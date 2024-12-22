@@ -11,7 +11,7 @@ namespace SSD_Assignment___Banking_Application
     {
         private string domainName = "ITSLIGO.LAN";
         string groupName = "Bank Teller";
-        private string username;
+        public string username;
         private string password;
         public bool BankTellerSignIn()
         {
