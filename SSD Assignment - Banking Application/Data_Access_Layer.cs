@@ -140,11 +140,7 @@ namespace Banking_Application
                             };
                         }
 
-                        accounts.Add(ba);
-
-                        //Logging
-                        Bank_Log bankLog = new Bank_Log();
-                        bankLog.LogTransaction(auth.username, ba.AccountNo, ba.Name, Bank_Log.TransactionType.Balance_Query);
+                        accounts.Add(ba); 
 
                     }
 
@@ -210,6 +206,10 @@ namespace Banking_Application
 
                 if (ba.AccountNo.Equals(accNo))
                 {
+                    //Logging
+                    Bank_Log bankLog = new Bank_Log();
+                    bankLog.LogTransaction(auth.username, ba.AccountNo, ba.Name, Bank_Log.TransactionType.Balance_Query);
+
                     return ba;
                 }
 
