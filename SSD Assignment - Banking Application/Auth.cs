@@ -23,7 +23,8 @@ namespace SSD_Assignment___Banking_Application
 
             // Prompt for password
             Console.Write("Enter your password: ");
-            password = Console.ReadLine();
+            password = PasswordMasking();
+            Console.WriteLine(password);
             return Authenticate();
         }
         public bool Authenticate()
@@ -53,6 +54,31 @@ namespace SSD_Assignment___Banking_Application
                     Console.WriteLine("User Is Not A Member Of The Authorized User Group.");
                 return false;
             }
+        }
+
+        public string PasswordMasking()
+        {
+            string password = string.Empty;
+            ConsoleKeyInfo key;
+
+            do
+            {
+                key = Console.ReadKey(intercept: true); 
+                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                {
+                    password += key.KeyChar;
+                    Console.Write("*"); 
+                }
+                else if (key.Key == ConsoleKey.Backspace && password.Length > 0)
+                {
+                    // Remove the last character from the password
+                    password = password[..^1];
+
+                    Console.Write("\b \b");
+                }
+            } while (key.Key != ConsoleKey.Enter);
+
+            return password;
         }
         
     }

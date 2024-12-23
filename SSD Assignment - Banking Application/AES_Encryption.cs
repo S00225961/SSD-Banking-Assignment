@@ -9,7 +9,7 @@ namespace SSD_Assignment___Banking_Application
     public class AES_Encryption
     {
 
-        public static byte[] Key => DPAPI.UnprotectFromFile(DPAPI.KeyFilePath);
+        private static byte[] Key => DPAPI.UnprotectFromFile(DPAPI.KeyFilePath);
 
         public static (byte[] encryptedData, byte[] iv) Encrypt(string plaintext)
         {
